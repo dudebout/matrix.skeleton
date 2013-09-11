@@ -380,18 +380,18 @@ First, it works with any \code{anchor}.
 Second, it provides finer control with respect to \code{row sep}, \code{column sep}, and \code{inner sep}.
 Third, the skeleton node positioning relies only on \TeX and PGF, not on \LaTeX{} or \TikZ.
 
-\code{matrixcells} properly aligns its \code{cells} when the node \code{anchor} is \code{center}.
+\code{matrixcells} properly aligns its \code{cells} when the node \code{anchor} is \code{base}.
 However, when the alignment is different it runs into problems, as exposed in the following \href{http://tex.stackexchange.com}{\TeX{} - \LaTeX{} Stack Exchange} question: \href{http://tex.stackexchange.com/questions/128045/matrixcells-problem-with-the-y-axis-only}{Matrixcells problem with the y-axis only}.
 This shortcoming is the result of some loss of information in \code{pgfmodulematrix.code.tex}.
 A dimension used during the placement of nodes is overwritten.
 Therefore, this information is not available to build the grid.
 In \code{matrixcells}, this lost dimension is reconstructed as the average of two other dimensions.
-This method only gives the right dimension when the nodes are centered.
+This method only gives the right dimension when the nodes are anchored at \code{base}.
 To always get proper alignment, the~\code{pgfmodulematrix.code.tex} macro erasing the dimension was rewritten.
 Following \href{http://tex.stackexchange.com/users/3235/percusse}{\code{@percusse}}'s recommendation this change is transparent to the user and does not require updating PGF/\TikZ.
 
 \code{matrixcells} only provides \code{cells} corresponding the \code{tiling-cells} in \code{matrix.skeleton}.
 This tiling behavior is sometimes desired.
-However, it can result in unexpected behaviors when: using a non-center \code{anchor}, using \code{row sep} or \code{column sep}, or when working on boundary nodes.
+However, it can result in unexpected behaviors when: using a non-base \code{anchor}, using \code{row sep} or \code{column sep}, or when working on boundary nodes.
 
 \end{document}
