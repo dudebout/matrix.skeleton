@@ -1,0 +1,278 @@
+\usepgflibrary{matrix.skeleton}
+
+\usetikzlibrary{matrix}
+\usetikzlibrary{fit}
+\usetikzlibrary{backgrounds}
+
+\tikzset{
+  label skeleton/.code = {
+    \pgfmatrixlabelskeleton
+  },
+  add styling node/.style = {
+    append after command = {
+      \pgfextra
+        \pgfinterruptpath
+          % This next line is not useful in CVS. This is protection that was needed in the past for nodes.
+          \setbox\tikz@figbox=\box\pgfutil@voidb@x
+          #1
+        \endpgfinterruptpath
+      \endpgfextra
+    }
+  },
+  style odd rows/.style = {
+    label skeleton,
+    add styling node = {
+      \foreach \row in {1, ..., \the\pgfmatrixcurrentrow}{
+        \ifodd\row
+          \fitandstyle{(m-row-\row)}{#1}
+        \fi
+      }
+    }
+  },
+  style even rows/.style = {
+    label skeleton,
+    add styling node={
+      \foreach \row in {1, ..., \the\pgfmatrixcurrentrow}{
+        \ifodd\row
+        \else
+          \fitandstyle{(m-row-\row)}{#1}
+        \fi
+      }
+    }
+  },
+  style odd rows on layer/.style 2 args= {
+    label skeleton,
+    add styling node = {
+      \foreach \row in {1, ..., \the\pgfmatrixcurrentrow}{
+        \ifodd\row
+          \fitandstyle[#1]{(m-row-\row)}{#2}
+        \fi
+      }
+    }
+  },
+  style even rows on layer/.style 2 args = {
+    label skeleton,
+    add styling node={
+      \foreach \row in {1, ..., \the\pgfmatrixcurrentrow}{
+        \ifodd\row
+        \else
+          \fitandstyle[#1]{(m-row-\row)}{#2}
+        \fi
+      }
+    }
+  },
+  style odd tiling rows/.style = {
+    label skeleton,
+    add styling node = {
+      \foreach \row in {1, ..., \the\pgfmatrixcurrentrow}{
+        \ifodd\row
+          \fitandstyle{(m-tiling-row-\row)}{#1}
+        \fi
+      }
+    }
+  },
+  style even tiling rows/.style = {
+    label skeleton,
+    add styling node={
+      \foreach \row in {1, ..., \the\pgfmatrixcurrentrow}{
+        \ifodd\row
+        \else
+          \fitandstyle{(m-tiling-row-\row)}{#1}
+        \fi
+      }
+    }
+  },
+  style odd tiling rows on layer/.style 2 args= {
+    label skeleton,
+    add styling node = {
+      \foreach \row in {1, ..., \the\pgfmatrixcurrentrow}{
+        \ifodd\row
+          \fitandstyle[#1]{(m-tiling-row-\row)}{#2}
+        \fi
+      }
+    }
+  },
+  style even tiling rows on layer/.style 2 args = {
+    label skeleton,
+    add styling node={
+      \foreach \row in {1, ..., \the\pgfmatrixcurrentrow}{
+        \ifodd\row
+        \else
+          \fitandstyle[#1]{(m-tiling-row-\row)}{#2}
+        \fi
+      }
+    }
+  },
+  style odd columns/.style = {
+    label skeleton,
+    add styling node = {
+      \foreach \col in {1, ..., \the\pgf@matrix@numberofcolumns}{
+        \ifodd\col
+          \fitandstyle{(m-column-\col)}{#1}
+        \fi
+      }
+    }
+  },
+  style even columns/.style = {
+    label skeleton,
+    add styling node={
+      \foreach \col in {1, ..., \the\pgf@matrix@numberofcolumns}{
+        \ifodd\col
+        \else
+          \fitandstyle{(m-column-\col)}{#1}
+        \fi
+      }
+    }
+  },
+  style odd columns on layer/.style 2 args= {
+    label skeleton,
+    add styling node = {
+      \foreach \col in {1, ..., \the\pgf@matrix@numberofcolumns}{
+        \ifodd\col
+          \fitandstyle[#1]{(m-column-\col)}{#2}
+        \fi
+      }
+    }
+  },
+  style even columns on layer/.style 2 args = {
+    label skeleton,
+    add styling node={
+      \foreach \col in {1, ..., \the\pgf@matrix@numberofcolumns}{
+        \ifodd\col
+        \else
+          \fitandstyle[#1]{(m-column-\col)}{#2}
+        \fi
+      }
+    }
+  },
+  style odd tiling columns/.style = {
+    label skeleton,
+    add styling node = {
+      \foreach \col in {1, ..., \the\pgf@matrix@numberofcolumns}{
+        \ifodd\col
+          \fitandstyle{(m-tiling-column-\col)}{#1}
+        \fi
+      }
+    }
+  },
+  style even tiling columns/.style = {
+    label skeleton,
+    add styling node={
+      \foreach \col in {1, ..., \the\pgf@matrix@numberofcolumns}{
+        \ifodd\col
+        \else
+          \fitandstyle{(m-tiling-column-\col)}{#1}
+        \fi
+      }
+    }
+  },
+  style odd tiling columns on layer/.style 2 args= {
+    label skeleton,
+    add styling node = {
+      \foreach \col in {1, ..., \the\pgf@matrix@numberofcolumns}{
+        \ifodd\col
+          \fitandstyle[#1]{(m-tiling-column-\col)}{#2}
+        \fi
+      }
+    }
+  },
+  style even tiling columns on layer/.style 2 args = {
+    label skeleton,
+    add styling node={
+      \foreach \col in {1, ..., \the\pgf@matrix@numberofcolumns}{
+        \ifodd\col
+        \else
+          \fitandstyle[#1]{(m-tiling-column-\col)}{#2}
+        \fi
+      }
+    }
+  },
+  style contour/.style = {%
+    label skeleton,
+    add styling node = {
+      \stylecontour{#1}
+    }
+  },
+  style contour on layer/.style 2 args= {%
+    label skeleton,
+    add styling node = {
+      \pgfonlayer{#1}
+        \stylecontour{#2}
+      \endpgfonlayer
+    }
+  },
+  style grid/.style = {%
+    label skeleton,
+    add styling node = {
+      \stylegrid{#1}
+    }
+  },
+  style grid on layer/.style 2 args= {%
+    label skeleton,
+    add styling node = {
+      \pgfonlayer{#1}
+        \stylegrid{#2}
+      \endpgfonlayer
+    }
+  },
+  style tiling grid/.style = {%
+    label skeleton,
+    add styling node = {
+      \styletilinggrid{#1}
+    }
+  },
+  style tiling grid on layer/.style 2 args= {%
+    label skeleton,
+    add styling node = {
+      \pgfonlayer{#1}
+        \styletilinggrid{#2}
+      \endpgfonlayer
+    }
+  },
+}
+
+\def\fitandstyle{\@ifnextchar[{\fitandstyle@layer}{\fitandstyle@main}}
+\def\fitandstyle@layer[#1]#2#3{
+  \pgfonlayer{#1}
+    \fitandstyle@main{#2}{#3}
+  \endpgfonlayer
+}
+\def\fitandstyle@main#1#2{\node [fit = #1, inner sep = 0pt, #2] {};}
+
+\def\stylecontour#1{
+  \path [#1] (\tikzlastnode-row-1.north west) -- (\tikzlastnode-row-1.north east) -- (\tikzlastnode-row-\the\pgfmatrixcurrentrow.south east) -- (\tikzlastnode-row-\the\pgfmatrixcurrentrow.south west) -- cycle;
+}
+
+\def\stylegrid#1{
+  \ifnum\the\pgfmatrixcurrentrow>1\relax%
+    \foreach \row in {1, ..., \the\pgfmatrixcurrentrow}{
+      \ifnum\row<\the\pgfmatrixcurrentrow\relax%
+        \path [#1] (\tikzlastnode-inter-row-\row.west) -- (\tikzlastnode-inter-row-\row.east);
+      \fi
+    }
+  \fi
+  \ifnum\the\pgf@matrix@numberofcolumns>1\relax%
+    \foreach \column in {1, ..., \the\pgf@matrix@numberofcolumns}{
+      \ifnum\column<\the\pgf@matrix@numberofcolumns\relax%
+        \path [#1] (\tikzlastnode-inter-column-\column.north) -- (\tikzlastnode-inter-column-\column.south);
+      \fi
+    }
+  \fi
+}
+
+\def\styletilinggrid#1{
+  \ifnum\the\pgfmatrixcurrentrow>1\relax%
+    \foreach \row in {1, ..., \the\pgfmatrixcurrentrow}{
+      \ifnum\row<\the\pgfmatrixcurrentrow\relax%
+        \path [#1] (\tikzlastnode-tiling-row-\row.south west) -- (\tikzlastnode-tiling-row-\row.south east);
+      \fi
+    }
+  \fi
+  \ifnum\the\pgf@matrix@numberofcolumns>1\relax%
+    \foreach \column in {1, ..., \the\pgf@matrix@numberofcolumns}{
+      \ifnum\column<\the\pgf@matrix@numberofcolumns\relax%
+        \path [#1] (\tikzlastnode-tiling-column-\column.north east) -- (\tikzlastnode-tiling-column-\column.south east);
+      \fi
+    }
+  \fi
+}
