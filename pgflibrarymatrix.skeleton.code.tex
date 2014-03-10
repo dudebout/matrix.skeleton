@@ -37,9 +37,7 @@
     \advance\pgf@matrix@skel@next@row by 1
     \pgfmathsetmacro{\pgf@matrix@skel@origy}{\csname pgf@matrix@origy\pgf@matrix@skel@row\endcsname + \csname pgf@matrix@maxy\pgf@matrix@skel@row\endcsname}%
     \pgfmathsetmacro{\pgf@matrix@skel@height}{\csname pgf@matrix@maxy\pgf@matrix@skel@row\endcsname - \csname pgf@matrix@miny\pgf@matrix@skel@row\endcsname - \pgflinewidth}%
-    \ifnum\pgf@matrix@skel@row<\pgfmatrixcurrentrow\relax%
-      \pgfmathsetmacro{\pgf@matrix@skel@height}{\pgf@matrix@skel@height - \csname pgf@matrix@row@sep@\the\pgf@matrix@skel@next@row\endcsname}
-    \fi
+    \pgfmathsetmacro{\pgf@matrix@skel@height}{\pgf@matrix@skel@height - \csname pgf@matrix@row@sep@\the\pgf@matrix@skel@next@row\endcsname}
     \foreach \pgf@matrix@skel@col in {1, ..., \pgf@matrix@numberofcolumns} {%
       \pgfmathsetmacro{\pgf@matrix@skel@origx}{\csname pgf@matrix@origx\pgf@matrix@skel@col\endcsname + \csname pgf@matrix@minx\pgf@matrix@skel@col\endcsname}%
       \pgfmathsetmacro{\pgf@matrix@skel@width}{\csname pgf@matrix@maxx\pgf@matrix@skel@col\endcsname - \csname pgf@matrix@minx\pgf@matrix@skel@col\endcsname - \pgflinewidth}%
