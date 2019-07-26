@@ -28,4 +28,4 @@ with this simple code:
 \end{document}
 ```
 
-More information and examples are available in [the manual](http://dudebout.com/files/pdfs/matrix.skeleton-manual.pdf).
+More information and examples are available in [the manual](https://dudebout.com/files/pdfs/matrix.skeleton-manual.pdf).
