@@ -17,6 +17,10 @@ pdflatex = pdflatex -output-dir $(build_dir) -halt-on-error
 
 all: $(tarball)
 
+install: $(tarball)
+	install -d $(PREFIX)
+	install -m 644 $< $(PREFIX)
+
 $(tarball): $(tar_content:%=$(tar_dir)/%)
 	tar -czf $@ $(tar_dir)
 
@@ -49,5 +53,5 @@ $(build_dir)/%.pdf: %.tex $(build_dir)
 	$(pdflatex) $<
 
 clean:
-	rm -f $(tarball)
+	rm -f $(tarball) result
 	rm -rf $(build_dir) $(tar_dir)
