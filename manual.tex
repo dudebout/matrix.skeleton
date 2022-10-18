@@ -395,74 +395,8 @@ Following \href{http://tex.stackexchange.com/users/3235/percusse}{\code{@percuss
 This tiling behavior is sometimes desired.
 However, it can result in unexpected behaviors when: using a non-base \code{anchor}, using \code{row sep} or \code{column sep}, or when working on boundary nodes.
 
-\section{Known Bugs}
+\section{Acknowledgments}
 
-\code{matrix.skeleton} has one known bug, relating to multiple matrices.
-
-\subsection{Does not Work with Multiple Matrices}
-
-\code{matrix.skeleton} does not work on figures with multiple matrices.
-The skeleton is correctly constructed for the first matrix but not for subsequent ones.
-For them, the skeleton has the correct shape but is not positioned correctly.
-A number of examples were shared in \href{https://github.com/dudebout/matrix.skeleton/issues/1}{this Github issue}.
-The example below was created to test solutions against.
-
-Onur Tolga Şehitoğlu has made progress on \href{https://github.com/dudebout/matrix.skeleton/pull/7}{a promising solution}.
-It does not currently handle the case where the tallest element in the last row is not in the first non-empty column.
-
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}
-
-\tikzset{my-matrix/.style={matrix of math nodes, label skeleton,
-                           left delimiter=(, right delimiter =)}}
-
-\matrix (A) [my-matrix] {
-  a_{11} & a_{12} \\
-  a_{21} & \frac{1}{a'_{22}} \\
-};
-\matrix (C) [my-matrix, right= of A] {
-  a_{11} \cdot b_1 + a_{12} \cdot b_2 \\
-  a_{21} \cdot b_1 + a_{22} \cdot b_2 \\
-};
-\matrix (B) [my-matrix, above=of C] {
-  b_1 \\
-  b_2 \\
-};
-
-\fitandstyle{(A-row-1)}{draw=red, fill=red!25, opacity=0.5}
-\fitandstyle{(A-row-2)}{draw=blue, fill=blue!25, opacity=0.5}
-\fitandstyle{(B-column-1)}{draw=yellow, fill=yellow!25, opacity=0.5}
-\fitandstyle{(C-cell-1-1)}{draw=orange, fill=orange!25, opacity=0.5}
-\fitandstyle{(C-cell-2-1)}{draw=green, fill=green!25, opacity=0.5}
-
-\end{tikzpicture}
-\end{figure}
-
-\begin{verbatim}
-\begin{tikzpicture}
-\tikzset{my-matrix/.style={matrix of math nodes, label skeleton,
-                           left delimiter=(, right delimiter =)}}
-
-\matrix (A) [my-matrix] {
-  a_{11} & a_{12} \\
-  a_{21} & \frac{1}{a'_{22}} \\
-};
-\matrix (C) [my-matrix, right= of A] {
-  a_{11} \cdot b_1 + a_{12} \cdot b_2 \\
-  a_{21} \cdot b_1 + a_{22} \cdot b_2 \\
-};
-\matrix (B) [my-matrix, above=of C] {
-  b_1 \\
-  b_2 \\
-};
-
-\fitandstyle{(A-row-1)}{draw=red, fill=red!25, opacity=0.5}
-\fitandstyle{(A-row-2)}{draw=blue, fill=blue!25, opacity=0.5}
-\fitandstyle{(B-column-1)}{draw=yellow, fill=yellow!25, opacity=0.5}
-\fitandstyle{(C-cell-1-1)}{draw=orange, fill=orange!25, opacity=0.5}
-\fitandstyle{(C-cell-2-1)}{draw=green, fill=green!25, opacity=0.5}
-\end{tikzpicture}
-\end{verbatim}
+Onur Tolga Şehitoğlu implemented support for multiple matrices.
 
 \end{document}

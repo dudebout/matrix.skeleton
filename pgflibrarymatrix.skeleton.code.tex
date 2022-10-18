@@ -16,8 +16,10 @@
   \xdef\pgf@matrix@skel@innerxsep{\pgfkeysvalueof{/pgf/inner xsep}}%
   \xdef\pgf@matrix@skel@innerysep{\pgfkeysvalueof{/pgf/inner ysep}}%
   \pgfscope%
-    \pgfgetlastxy\ck@shift@x\ck@shift@y
-    \pgftransformshift{\pgfpoint{\ck@shift@x}{\ck@shift@y}}%
+    \pgf@process{\pgfpointanchor{\tikz@fig@name}{south west}}%
+    \pgfmathsetlength\pgf@xa{\pgf@x + \pgf@matrix@skel@innerxsep}%
+    \pgfmathsetlength\pgf@ya{\pgf@y + \pgf@matrix@skel@innerysep - \csname pgf@matrix@miny\the\pgfmatrixcurrentrow\endcsname - \pgfmatrixrowsep}%
+    \pgftransformshift{\pgfpoint{\pgf@xa}{\pgf@ya}}%
     \pgfset{inner sep=0pt}%
     \pgf@matrix@skeleton@create@cells%
     \pgf@matrix@skeleton@create@tiling@cells%
