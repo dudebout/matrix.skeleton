@@ -20,16 +20,22 @@
 	\pgf@process{\pgfpointanchor{\tikz@fig@name}{south west}}%    Bottom left corner
 	\pgfmathsetlength\pgf@xa{\pgf@x+\pgf@matrix@skel@innerxsep}%
 	\pgfmathsetlength\pgf@ya{\pgf@y+\pgf@matrix@skel@innerysep}%
-	% find any node in the last row and set \ck@shift@y to difference between text and south anchors
-  	\foreach \pgf@matrix@skel@col in {1, ..., \pgf@matrix@numberofcolumns} {%
-		\pgfutil@ifundefined{pgf@sh@ns@\tikz@fig@name-\the\pgfmatrixcurrentrow-\pgf@matrix@skel@col}{}{%
-			\pgf@process{\pgfpointanchor{\tikz@fig@name-\the\pgfmatrixcurrentrow-\pgf@matrix@skel@col}{text}}%
+	% find nodes in the last row and set \ck@shift@y to maximum difference between text and south anchors
+	\foreach \pgf@matrix@skel@node in \pgf@matrix@node@list {%
+	  \ifx\pgf@matrix@skel@node\pgfutil@empty%
+ 	   \else%
+		\edef\pgf@tmp@row{\expandafter\expandafter\expandafter\pgfutil@firstoftwo\csname pgf@matrix@node@location@\pgf@matrix@skel@node \endcsname}%
+		\ifnum\pgf@tmp@row=\the\pgfmatrixcurrentrow%
+			\pgf@process{\pgfpointanchor{\pgf@matrix@skel@node}{base}}%
 			\pgf@yb=\pgf@y%
-			\pgf@process{\pgfpointanchor{\tikz@fig@name-\the\pgfmatrixcurrentrow-\pgf@matrix@skel@col}{south}}%
+			\pgf@process{\pgfpointanchor{\pgf@matrix@skel@node}{south}}%
 			\pgfmathsetlength\pgf@yb{\pgf@yb-\pgf@y}%
-			\xdef\ck@shift@y{\the\pgf@yb}%
-			\breakforeach%
-		}%
+			\ifdim\pgf@yb>\ck@shift@y%
+				\xdef\ck@shift@y{\the\pgf@yb}%
+			\fi%
+		\else%
+		\fi%
+	  \fi%
 	}%
 	\pgfmathaddtolength{\pgf@ya}{\ck@shift@y}%
    	\pgftransformshift{\pgfpoint{\pgf@xa}{\pgf@ya}}%
