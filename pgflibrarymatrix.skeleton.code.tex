@@ -8,20 +8,17 @@
 
 \expandafter\def\expandafter\pgf@end@matrix@skeleton\expandafter{\pgf@end@matrix \pgf@matrix@create@skeleton}%
 
-
 % Creates the skeleton
 
 % orig contains the upper left corner of the different boxes
+
 \def\pgf@matrix@create@skeleton{%
   \xdef\pgf@matrix@skel@innerxsep{\pgfkeysvalueof{/pgf/inner xsep}}%
   \xdef\pgf@matrix@skel@innerysep{\pgfkeysvalueof{/pgf/inner ysep}}%
   \pgfscope%
-    \xdef\ck@shift@y{0pt}%  store extra  y shift from south west matrix anchor
-	\pgf@process{\pgfpointanchor{\tikz@fig@name}{south west}}%    Bottom left corner
-	\pgfmathsetlength\pgf@xa{\pgf@x+\pgf@matrix@skel@innerxsep}%
-	\pgfmathsetlength\pgf@ya{\pgf@y+\pgf@matrix@skel@innerysep}%
-	\pgfmathaddtolength{\pgf@ya}{-\csname pgf@matrix@miny\the\pgfmatrixcurrentrow\endcsname}%
-	\pgfmathaddtolength{\pgf@ya}{-\pgfmatrixrowsep}%
+    \pgf@process{\pgfpointanchor{\tikz@fig@name}{south west}}%    Bottom left corner
+    \pgfmathsetlength\pgf@xa{\pgf@x+\pgf@matrix@skel@innerxsep}%
+    \pgfmathsetlength\pgf@ya{\pgf@y+\pgf@matrix@skel@innerysep-\csname pgf@matrix@miny\the\pgfmatrixcurrentrow\endcsname-\pgfmatrixrowsep}%
    	\pgftransformshift{\pgfpoint{\pgf@xa}{\pgf@ya}}%
     \pgfset{inner sep=0pt}%
     \pgf@matrix@skeleton@create@cells%
