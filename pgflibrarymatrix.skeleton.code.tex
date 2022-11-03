@@ -8,10 +8,10 @@
 
 \expandafter\def\expandafter\pgf@end@matrix@skeleton\expandafter{\pgf@end@matrix \pgf@matrix@create@skeleton}%
 
+
 % Creates the skeleton
 
 % orig contains the upper left corner of the different boxes
-
 \def\pgf@matrix@create@skeleton{%
   \xdef\pgf@matrix@skel@innerxsep{\pgfkeysvalueof{/pgf/inner xsep}}%
   \xdef\pgf@matrix@skel@innerysep{\pgfkeysvalueof{/pgf/inner ysep}}%
@@ -20,24 +20,8 @@
 	\pgf@process{\pgfpointanchor{\tikz@fig@name}{south west}}%    Bottom left corner
 	\pgfmathsetlength\pgf@xa{\pgf@x+\pgf@matrix@skel@innerxsep}%
 	\pgfmathsetlength\pgf@ya{\pgf@y+\pgf@matrix@skel@innerysep}%
-	% find nodes in the last row and set \ck@shift@y to maximum difference between text and south anchors
-	\foreach \pgf@matrix@skel@node in \pgf@matrix@node@list {%
-	  \ifx\pgf@matrix@skel@node\pgfutil@empty%
- 	   \else%
-		\edef\pgf@tmp@row{\expandafter\expandafter\expandafter\pgfutil@firstoftwo\csname pgf@matrix@node@location@\pgf@matrix@skel@node \endcsname}%
-		\ifnum\pgf@tmp@row=\the\pgfmatrixcurrentrow%
-			\pgf@process{\pgfpointanchor{\pgf@matrix@skel@node}{base}}%
-			\pgf@yb=\pgf@y%
-			\pgf@process{\pgfpointanchor{\pgf@matrix@skel@node}{south}}%
-			\pgfmathsetlength\pgf@yb{\pgf@yb-\pgf@y}%
-			\ifdim\pgf@yb>\ck@shift@y%
-				\xdef\ck@shift@y{\the\pgf@yb}%
-			\fi%
-		\else%
-		\fi%
-	  \fi%
-	}%
-	\pgfmathaddtolength{\pgf@ya}{\ck@shift@y}%
+	\pgfmathaddtolength{\pgf@ya}{-\csname pgf@matrix@miny\the\pgfmatrixcurrentrow\endcsname}%
+	\pgfmathaddtolength{\pgf@ya}{-\pgfmatrixrowsep}%
    	\pgftransformshift{\pgfpoint{\pgf@xa}{\pgf@ya}}%
     \pgfset{inner sep=0pt}%
     \pgf@matrix@skeleton@create@cells%
