@@ -15,7 +15,9 @@ tarball = $(tar_dir).tgz
 
 pdflatex = pdflatex -output-dir $(build_dir) -halt-on-error
 
-all: $(tarball)
+all: test $(tarball)
+
+test: $(build_dir)/regression-tests.pdf
 
 install: $(tarball)
 	install -d $(PREFIX)
